@@ -43,12 +43,12 @@ export default {
       })
 
     },
-    downloadPic: function () {
+    downloadPic: function (name) {
       return new Promise((resolve, reject) => {
         // 把canvas图片下载
         const link = document.createElement('a')
         link.href = document.getElementById('canvas').toDataURL()
-        link.download = 'canvas.png'
+        link.download = name? name : 'canvas.png'
         link.click()
         resolve();
       })
@@ -91,7 +91,7 @@ export default {
         // 把文件变成url，通过canvas展示
         reader.readAsDataURL(file)
         await this.genProdAndFont(reader, ctx, file)
-        await this.downloadPic();
+        await this.downloadPic(file.name);
         // 暂停x秒,给浏览器一点喘息空间
         await new Promise(resolve => setTimeout(resolve, 500));
         ctx.clearRect(0, 0, canvas.width, canvas.height)
